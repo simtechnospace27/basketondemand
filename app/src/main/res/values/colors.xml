@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+
+    <color name="colorPrimary">#AA4680</color>
+    <color name="colorPrimaryDark">#AA4680</color>
+    <color name="colorPrimary1">#F6F6F6</color>
+    <color name="colorPrimaryDark1">#F6F6F6</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorNavIcon">#dae9f6</color>
+    <color name="colorNavText">#01294b</color>
+    <color name="backgroundColor">#EBE7E7</color>
+    <color name="backgroundColorNormal">#141414</color>
+    <color name="backgroundColorChange">#FFFFFF</color>
+    <color name="normalTextColor">#000000</color>
+    <color name="changeTextColor">#000000</color>
+    <color name="colorMainTheme">#EB4141</color>
+    <color name="errorTextColor">#FF0000</color>
+    <color name="normalButtonColor">#FF0000</color>
+    <color name="red_500">#FF0000</color>
+
+    <color name="backgroundColorNormalTabLayout">#EB4141</color>
+
+    <color name="colorIMF">#FF0000</color>
+    <color name="border_color">#E2C8C8</color>
+
+    <color name="border">#E2C8C8</color>
+
+
+    <color name="android_app_upd_window_background_color">#FFFFFFFF</color>
+    <color name="android_app_upd_title_bar_color">#FF3F51B5</color>
+    <color name="android_app_upd_info_txt_color">#FF3F51B5</color>
+
+    <color name="android_app_upd_restricter_dlg_btn_pressed_color">#a33F51B5</color>
+    <color name="android_app_upd_restricter_dlg_btn_dark_state_color">#ff3F51B5</color>
+    <color name="android_app_upd_restricter_dlg_btn_light_state_color">#ffffffff</color>
+
+    <color name="android_app_upd_upd_dlg_btn_text_color">#ffFF4081</color>
+
+
 </resources>
