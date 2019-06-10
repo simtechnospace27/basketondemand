@@ -39,16 +39,13 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         mImageSliderLayout = findViewById(R.id.slider);
 
         final String banner_image_url = URLClass.sliderImageUrl;
 
-
-
+        url_maps = new HashMap<>();
 
         final RequestQueue requestQueue = Volley.newRequestQueue( this );
-
 
         final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest( Request.Method.GET, banner_image_url, null,  new Response.Listener<JSONObject>() {
             @Override
@@ -116,6 +113,12 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
             }
         });
         requestQueue.add( jsonObjectRequest );
+
+
+
+
+
+
 
                 }
 
