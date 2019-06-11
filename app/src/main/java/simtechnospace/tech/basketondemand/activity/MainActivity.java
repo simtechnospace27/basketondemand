@@ -40,15 +40,10 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
     BaseSliderView.OnSliderClickListener referenceData = this;
     ViewPagerEx.OnPageChangeListener refernceOnPagechange = this;
     HashMap<String,String> url_maps;
-
     RecyclerView mCategoryListRecycelrView;
-
     public static ShopByCategoryAdapter mShopByCategoryAdapter;
     private ArrayList<ShopByCategoryModel> mShopByCategoryModelArrayList;
-
     GridLayoutManager mLayoutManager;
-
-
 
 
     @Override
@@ -63,10 +58,10 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
 
         mShopByCategoryAdapter = new ShopByCategoryAdapter(mShopByCategoryModelArrayList);
 
-        int mNoOfColumns = Utility.calculateNoOfColumns(this, 100);
+        int mNoOfColumns = Utility.calculateNoOfColumns(this, 170);
 
         mLayoutManager  = new GridLayoutManager(getApplicationContext(),mNoOfColumns);
-        mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         mCategoryListRecycelrView.setLayoutManager(mLayoutManager);
         mCategoryListRecycelrView.setHasFixedSize(true);
@@ -124,16 +119,12 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
 
                             mImageSliderLayout.addSlider(textSliderView);
 
-
-
-
                         }
                         mImageSliderLayout.setPresetTransformer(SliderLayout.Transformer.Tablet);
                         mImageSliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
                         mImageSliderLayout.setCustomAnimation(new DescriptionAnimation());
                         mImageSliderLayout.setDuration(4000);
                         mImageSliderLayout.addOnPageChangeListener(refernceOnPagechange);
-
 
                     }
                 } catch (JSONException e) {
@@ -154,10 +145,68 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
 
 
 
-        
 
 
+
+
+
+
+
+        final String categoryImageUrl = URLClass.categoryImageUrl;
+
+
+        final RequestQueue requestQueueM = Volley.newRequestQueue( this );
+
+        final JsonObjectRequest jsonObjectRequestM = new JsonObjectRequest( Request.Method.GET, categoryImageUrl, null,  new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+
+                try {
+                    if (response.getString("msg"  ).equalsIgnoreCase( "success" ))
+                    {
+
+                        JSONArray jsonArray = response.getJSONArray( "result" );
+
+                        for (int i=0; i< jsonArray.length(); i++)
+                        {
+                            JSONObject jsonObject = jsonArray.getJSONObject( i );
+
+                            int id = jsonObject.getInt( "id" );
+                            String url = jsonObject.getString( "img" );
+                            String name = jsonObject.getString("name");
+                            System.out.println(name);
+
+                            ShopByCategoryModel shopByCategoryModel = new ShopByCategoryModel(id,name,url);
+                            mShopByCategoryModelArrayList.add(shopByCategoryModel);
+                            mShopByCategoryAdapter.notifyDataSetChanged();
+
+                        }
+
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText( MainActivity.this, "Please check internet connection", Toast.LENGTH_SHORT ).show();
+
+            }
+        });
+
+
+        requestQueueM.add( jsonObjectRequestM );
+
+
+
+
+
+
+    }
 
 
 

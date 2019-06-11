@@ -18,13 +18,13 @@ import simtechnospace.tech.basketondemand.pojoclass.ShopByCategoryModel;
 
 public class ShopByCategoryAdapter extends RecyclerView.Adapter<ShopByCategoryAdapter.MyViewHolder> {
 
-    private ArrayList<ShopByCategoryModel> homeRecyclerModels; // this data structure carries our title and description
+    private ArrayList<ShopByCategoryModel> shopByCategoryModelsArrayList; // this data structure carries our title and description
 
     int mPosition;
 
 
-    public ShopByCategoryAdapter(ArrayList<ShopByCategoryModel> homeRecyclerModels) {
-        this.homeRecyclerModels = homeRecyclerModels;
+    public ShopByCategoryAdapter(ArrayList<ShopByCategoryModel> shopByCategoryModelsArrayList) {
+        this.shopByCategoryModelsArrayList = shopByCategoryModelsArrayList;
     }
 
     @Override
@@ -32,11 +32,7 @@ public class ShopByCategoryAdapter extends RecyclerView.Adapter<ShopByCategoryAd
 
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_row_layout_shop_by_categories, parent, false);
-
         final MyViewHolder mViewHolder = new MyViewHolder(view);
-
-
-
 
         // inflate your custom row layout here
         return mViewHolder;
@@ -46,13 +42,16 @@ public class ShopByCategoryAdapter extends RecyclerView.Adapter<ShopByCategoryAd
 
         mPosition = position;
 
+        holder.textViewSingleCategoryName.setText(shopByCategoryModelsArrayList.get(position).getCategoryName());
+        Picasso.with(holder.context).load(shopByCategoryModelsArrayList.get(position).getCategoryImageUrl()).into(holder.imageViewSingleCategory);
+
 
     }
 
 
     @Override
     public int getItemCount() {
-        return homeRecyclerModels.size();
+        return shopByCategoryModelsArrayList.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
