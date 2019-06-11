@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
                             int id = jsonObject.getInt( "id" );
                             String url = jsonObject.getString( "img" );
                             String name = jsonObject.getString("name");
-                            System.out.println(name);
+
 
                             ShopByCategoryModel shopByCategoryModel = new ShopByCategoryModel(id,name,url);
                             mShopByCategoryModelArrayList.add(shopByCategoryModel);

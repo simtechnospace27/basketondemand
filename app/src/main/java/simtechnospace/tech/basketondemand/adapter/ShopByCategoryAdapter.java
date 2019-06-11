@@ -1,6 +1,7 @@
 package simtechnospace.tech.basketondemand.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import simtechnospace.tech.basketondemand.R;
+import simtechnospace.tech.basketondemand.activity.CategoryDisplayList;
 import simtechnospace.tech.basketondemand.pojoclass.ShopByCategoryModel;
 
 public class ShopByCategoryAdapter extends RecyclerView.Adapter<ShopByCategoryAdapter.MyViewHolder> {
@@ -34,6 +36,16 @@ public class ShopByCategoryAdapter extends RecyclerView.Adapter<ShopByCategoryAd
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_row_layout_shop_by_categories, parent, false);
         final MyViewHolder mViewHolder = new MyViewHolder(view);
 
+
+
+        mViewHolder.cardViewSingleCategoryCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mViewHolder.context, CategoryDisplayList.class);
+                mViewHolder.context.startActivity(intent);
+
+            }
+        });
         // inflate your custom row layout here
         return mViewHolder;
     }
