@@ -2,6 +2,9 @@ package simtechnospace.tech.basketondemand.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -15,15 +18,20 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.pnikosis.materialishprogress.ProgressWheel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import simtechnospace.tech.basketondemand.R;
+import simtechnospace.tech.basketondemand.adapter.ShopByCategoryAdapter;
+import simtechnospace.tech.basketondemand.pojoclass.ShopByCategoryModel;
 import simtechnospace.tech.basketondemand.pojoclass.URLClass;
+import simtechnospace.tech.basketondemand.pojoclass.Utility;
 
 public class MainActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
@@ -33,6 +41,15 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
     ViewPagerEx.OnPageChangeListener refernceOnPagechange = this;
     HashMap<String,String> url_maps;
 
+    RecyclerView mCategoryListRecycelrView;
+
+    public static ShopByCategoryAdapter mShopByCategoryAdapter;
+    private ArrayList<ShopByCategoryModel> mShopByCategoryModelArrayList;
+
+    GridLayoutManager mLayoutManager;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +57,25 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
         setContentView(R.layout.activity_main);
 
         mImageSliderLayout = findViewById(R.id.slider);
+
+        mCategoryListRecycelrView = findViewById(R.id.category_list_recycler_view);
+        mShopByCategoryModelArrayList = new ArrayList<>();
+
+        mShopByCategoryAdapter = new ShopByCategoryAdapter(mShopByCategoryModelArrayList);
+
+        int mNoOfColumns = Utility.calculateNoOfColumns(this, 100);
+
+        mLayoutManager  = new GridLayoutManager(getApplicationContext(),mNoOfColumns);
+        mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        mCategoryListRecycelrView.setLayoutManager(mLayoutManager);
+        mCategoryListRecycelrView.setHasFixedSize(true);
+
+
+        //we can now set adapter to recyclerView;
+        mCategoryListRecycelrView.setAdapter( mShopByCategoryAdapter );
+
+
 
         final String banner_image_url = URLClass.sliderImageUrl;
 
@@ -118,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
 
 
 
+        
 
 
                 }

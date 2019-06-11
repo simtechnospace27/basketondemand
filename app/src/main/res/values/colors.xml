@@ -18,6 +18,9 @@
     <color name="normalButtonColor">#FF0000</color>
     <color name="red_500">#FF0000</color>
 
+    <color name="gradient_start">#abbaab</color>
+    <color name="gradient_end">#ffffff</color>
+
     <color name="backgroundColorNormalTabLayout">#EB4141</color>
 
     <color name="colorIMF">#FF0000</color>
