@@ -11,19 +11,19 @@ import com.android.volley.toolbox.Volley;
 
 import simtechnospace.tech.basketondemand.R;
 
-public class CategoryDisplayList extends AppCompatActivity {
+public class CategoryWiseProductList extends AppCompatActivity {
 
-    ImageView mStatic_image;
-    TextView  mCategory_name;
-    RecyclerView mCategory_displaylist;
+    ImageView mCategoryBannerImage;
+    TextView  mCategoryName;
+    RecyclerView mCategoryListRecyclerView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories_displaylist);
 
-        mStatic_image = findViewById(R.id.imgstatic);
-        mCategory_name = findViewById(R.id.categoryname);
-        mCategory_displaylist = findViewById(R.id.category_itemlist_recyclerview);
+        mCategoryBannerImage = findViewById(R.id.bannerCateogryImage);
+        mCategoryName = findViewById(R.id.categoryName);
+        mCategoryListRecyclerView = findViewById(R.id.categoryListRecyclerView);
 
 
 

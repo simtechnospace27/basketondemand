@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
 
         mShopByCategoryAdapter = new ShopByCategoryAdapter(mShopByCategoryModelArrayList);
 
-        int mNoOfColumns = Utility.calculateNoOfColumns(this, 170);
+        int mNoOfColumns = Utility.calculateNoOfColumns(this, 140);
 
         mLayoutManager  = new GridLayoutManager(getApplicationContext(),mNoOfColumns);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -175,9 +175,10 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
                             int id = jsonObject.getInt( "id" );
                             String url = jsonObject.getString( "img" );
                             String name = jsonObject.getString("name");
+                            int containsSubCat = jsonObject.getInt("containsSubCat");
 
 
-                            ShopByCategoryModel shopByCategoryModel = new ShopByCategoryModel(id,name,url);
+                            ShopByCategoryModel shopByCategoryModel = new ShopByCategoryModel(id,name,url, containsSubCat);
                             mShopByCategoryModelArrayList.add(shopByCategoryModel);
                             mShopByCategoryAdapter.notifyDataSetChanged();
 

@@ -5,15 +5,26 @@ public class ShopByCategoryModel {
     int mCategoryId;
     String mCategoryName;
     String mCategoryImageUrl;
+    int mContainsSubCat;
 
 
 
-    public ShopByCategoryModel(int categoryId, String categoryName, String categoryImageUrl) {
+    public ShopByCategoryModel(int categoryId, String categoryName, String categoryImageUrl, int containsSubCat) {
         this.mCategoryId = categoryId;
         this.mCategoryName = categoryName;
         this.mCategoryImageUrl = categoryImageUrl;
+        this.mContainsSubCat = containsSubCat;
     }
 
+
+
+    public int getContainsSubCat() {
+        return mContainsSubCat;
+    }
+
+    public void setContainsSubCat(int containsSubCat) {
+        this.mContainsSubCat = containsSubCat;
+    }
 
     public int getCategoryId() {
         return mCategoryId;

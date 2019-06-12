@@ -15,7 +15,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import simtechnospace.tech.basketondemand.R;
-import simtechnospace.tech.basketondemand.activity.CategoryDisplayList;
+import simtechnospace.tech.basketondemand.activity.CategoryWiseProductList;
+import simtechnospace.tech.basketondemand.activity.SubCategoryList;
 import simtechnospace.tech.basketondemand.pojoclass.ShopByCategoryModel;
 
 public class ShopByCategoryAdapter extends RecyclerView.Adapter<ShopByCategoryAdapter.MyViewHolder> {
@@ -41,8 +42,16 @@ public class ShopByCategoryAdapter extends RecyclerView.Adapter<ShopByCategoryAd
         mViewHolder.cardViewSingleCategoryCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mViewHolder.context, CategoryDisplayList.class);
-                mViewHolder.context.startActivity(intent);
+
+               if(shopByCategoryModelsArrayList.get(mViewHolder.getPosition()).getContainsSubCat() == 0)
+               {
+                   Intent intent = new Intent(mViewHolder.context, SubCategoryList.class);
+                   mViewHolder.context.startActivity(intent);
+               }
+               else {
+                   Intent intent = new Intent(mViewHolder.context, CategoryWiseProductList.class);
+                   mViewHolder.context.startActivity(intent);
+               }
 
             }
         });
