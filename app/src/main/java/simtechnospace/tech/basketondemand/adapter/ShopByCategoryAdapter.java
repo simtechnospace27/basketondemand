@@ -43,7 +43,7 @@ public class ShopByCategoryAdapter extends RecyclerView.Adapter<ShopByCategoryAd
             @Override
             public void onClick(View view) {
 
-               if(shopByCategoryModelsArrayList.get(mViewHolder.getPosition()).getContainsSubCat() == 0)
+               if(shopByCategoryModelsArrayList.get(mViewHolder.getPosition()).getContainsSubCat() == 1)
                {
                    Intent intent = new Intent(mViewHolder.context, SubCategoryList.class);
                    mViewHolder.context.startActivity(intent);
