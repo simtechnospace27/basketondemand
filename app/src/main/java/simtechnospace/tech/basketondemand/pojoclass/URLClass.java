@@ -8,4 +8,6 @@ public class URLClass {
 
     public static String subCategoryDataUrl = "http://goviddo.tech/BOD/subcategories.php?catid=";
 
+    public static String productListUrl = "http://goviddo.tech/BOD/productlist.php?catid=";
+
 }

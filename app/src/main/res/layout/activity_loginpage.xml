@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginlogo"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnsignup"
+        android:background="#27b227"
+        android:text="Not Signed Up Yet?       SIGN UP"
+        android:textSize="@dimen/button_height"
+        android:textColor="#ffffff"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayoutUserNameRegistration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:autoSizeMaxTextSize="30dp"
+        android:autoSizeMinTextSize="16dp"
+        android:textColorHint="@color/changeTextColor">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edtUserNameRegistration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoSizeMaxTextSize="30dp"
+            android:autoSizeMinTextSize="16dp"
+            android:inputType="textEmailAddress"
+            android:padding="5dp"
+            android:textColor="@color/changeTextColor"
+            android:textColorHint="@color/changeTextColor" />
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayoutUserReenterPasswordRegistration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:autoSizeMaxTextSize="30dp"
+        android:autoSizeMinTextSize="16dp"
+        android:textColorHint="@color/changeTextColor">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edtUserReenterPasswordRegistration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoSizeMaxTextSize="30dp"
+            android:autoSizeMinTextSize="16dp"
+            android:inputType="textPassword"
+            android:padding="5dp"
+            android:textColor="@color/changeTextColor"
+            android:textColorHint="@color/changeTextColor" />
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnloginnow"
+        android:text="Login Now"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:background="#27b227"/>
+
+
+
+</LinearLayout>

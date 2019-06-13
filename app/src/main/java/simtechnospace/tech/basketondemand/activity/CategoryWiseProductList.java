@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,10 +15,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,21 +24,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import simtechnospace.tech.basketondemand.R;
-import simtechnospace.tech.basketondemand.adapter.ShopByCategoryAdapter;
-import simtechnospace.tech.basketondemand.adapter.SubCategoryListAdapter;
-import simtechnospace.tech.basketondemand.pojoclass.ClickedCategoryDetails;
+import simtechnospace.tech.basketondemand.adapter.ProductListAdapter;
 import simtechnospace.tech.basketondemand.pojoclass.ClickedCategoryForProducts;
-import simtechnospace.tech.basketondemand.pojoclass.ShopByCategoryModel;
-import simtechnospace.tech.basketondemand.pojoclass.SubCategoryModel;
 import simtechnospace.tech.basketondemand.pojoclass.URLClass;
+import simtechnospace.tech.basketondemand.pojoclass.Utility;
+import simtechnospace.tech.basketondemand.pojoclass.ProductListModel;
+
 
 public class CategoryWiseProductList extends AppCompatActivity {
 
     ImageView mCategoryBannerImage;
-    TextView  mCategoryName;
+    TextView mCategoryName;
     RecyclerView mCategoryListRecyclerView;
 
+    HashMap<String, String> url_maps;
 
+    public ProductListAdapter mProductAdapter;
+    public ArrayList<ProductListModel> mProductModelArrayList;
+    GridLayoutManager gridLayoutManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,9 +54,78 @@ public class CategoryWiseProductList extends AppCompatActivity {
 
         int catId = ClickedCategoryForProducts.getCatId();
         int subCatId = ClickedCategoryForProducts.getSubCatId();
+        int mNoOfColumns = Utility.calculateNoOfColumns(this, 180);
 
-        System.out.println("Clicked Category Id = "+catId);
-        System.out.println("Clicked SubCategory Id = "+subCatId);
+        mProductModelArrayList = new ArrayList<>();
+
+        mProductAdapter = new ProductListAdapter(mProductModelArrayList);
+
+        gridLayoutManager = new GridLayoutManager(getApplicationContext(), mNoOfColumns);
+        gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        mCategoryListRecyclerView.setLayoutManager(gridLayoutManager);
+        mCategoryListRecyclerView.setHasFixedSize(true);
+
+        mCategoryListRecyclerView.setAdapter(mProductAdapter);
+
+        String productList_Url = URLClass.productListUrl+catId+"1&subcatid="+subCatId;
+
+
+
+
+        final RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, productList_Url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+                    String msg = response.getString("msg");
+
+                    if (msg.equalsIgnoreCase("success"))
+                    {
+
+                        JSONArray jsonArrayList = response.getJSONArray("result");
+
+                        for (int i=0; i<jsonArrayList.length(); i++)
+                        {
+                            JSONObject js = jsonArrayList.getJSONObject(i);
+
+                            int id = js.getInt("id");
+                            String imgUrl = js.getString("img");
+                            String name = js.getString("name");
+                            String quantity = js.getString("quantity");
+                            String mrp = js.getString("mrp");
+                            int disacount = js.getInt("disacount");
+
+                            System.out.println(imgUrl);
+
+                         //   int dmrp = Integer.parseInt(mrp);
+
+                           double dmrp = Double.parseDouble(mrp);
+
+                            ProductListModel productListModel = new ProductListModel(imgUrl,name,quantity,disacount,dmrp);
+
+                            mProductModelArrayList.add(productListModel);
+                            mProductAdapter.notifyDataSetChanged();
+
+                        }
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        requestQueue.add(jsonObjectRequest);
 
     }
 }
