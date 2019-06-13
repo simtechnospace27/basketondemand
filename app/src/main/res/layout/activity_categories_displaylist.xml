@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,9 +21,17 @@
         android:scaleType="fitXY"
         android:src="@drawable/fruit"
         android:layout_width="fill_parent"
-        android:layout_height="250dp"
+        android:layout_height="200dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        app:cardCornerRadius="8dp">
 
     <TextView
         android:id="@+id/categoryName"
@@ -33,6 +42,7 @@
         android:gravity="center"
         android:fadingEdgeLength="16px"
         android:textSize="16dp"/>
+    </android.support.v7.widget.CardView>
 
 
 </RelativeLayout>
