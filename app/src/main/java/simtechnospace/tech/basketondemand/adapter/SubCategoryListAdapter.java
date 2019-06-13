@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import simtechnospace.tech.basketondemand.R;
 import simtechnospace.tech.basketondemand.activity.CategoryWiseProductList;
 import simtechnospace.tech.basketondemand.activity.SubCategoryList;
+import simtechnospace.tech.basketondemand.pojoclass.ClickedCategoryForProducts;
 import simtechnospace.tech.basketondemand.pojoclass.SubCategoryModel;
 
 public class SubCategoryListAdapter extends RecyclerView.Adapter<SubCategoryListAdapter.MyViewHolder> {
@@ -43,6 +44,12 @@ public SubCategoryListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, 
         mViewHolder.cardViewSingleSubcategorydetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                int subCatId = subCategoryModelArrayList.get(mViewHolder.getPosition()).getSubcategoryId();
+                int catId = subCategoryModelArrayList.get(mViewHolder.getPosition()).getCatId();
+
+                ClickedCategoryForProducts clickedCategoryForProducts = new ClickedCategoryForProducts(subCatId,catId);
+
                 Intent intent = new Intent(mViewHolder.context, CategoryWiseProductList.class);
                 mViewHolder.context.startActivity(intent);
             }
@@ -60,6 +67,7 @@ public void onBindViewHolder(final SubCategoryListAdapter.MyViewHolder holder, i
 
     holder.textViewSubCategoryName.setText(subCategoryModelArrayList.get(position).getSubCategoryName());
 
+    System.out.println(subCategoryModelArrayList.get(position).getSubCategoryImageUrl());
     Picasso.with(holder.context).load(subCategoryModelArrayList.get(position).getSubCategoryImageUrl()).into(holder.imageViewSubCategoryImage);
 
         }

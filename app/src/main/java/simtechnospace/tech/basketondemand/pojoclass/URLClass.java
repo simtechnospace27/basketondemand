@@ -6,4 +6,6 @@ public class URLClass {
 
     public static String categoryImageUrl = "http://goviddo.tech/BOD/categories.php";
 
+    public static String subCategoryDataUrl = "http://goviddo.tech/BOD/subcategories.php?catid=";
+
 }

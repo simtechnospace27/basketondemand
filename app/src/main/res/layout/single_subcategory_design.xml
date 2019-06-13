@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="235dp">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="235dp"
         android:layout_margin="10dp"
         android:id="@+id/singleSubCategoryCard"
         app:cardCornerRadius="8dp">
@@ -20,7 +20,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14dp"
+                android:textSize="16dp"
+                android:textStyle="bold"
                 android:id="@+id/textViewSubCategoryName"
                 android:textColor="#000000"
                 android:textAlignment="center"
@@ -28,7 +29,7 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="200dp"
                 android:src="@drawable/fruit"
                 android:id="@+id/imageViewSingleSubCategoryImage"
                 android:scaleType="fitXY"/>

@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import simtechnospace.tech.basketondemand.R;
 import simtechnospace.tech.basketondemand.activity.CategoryWiseProductList;
 import simtechnospace.tech.basketondemand.activity.SubCategoryList;
+import simtechnospace.tech.basketondemand.pojoclass.ClickedCategoryDetails;
+import simtechnospace.tech.basketondemand.pojoclass.ClickedCategoryForProducts;
 import simtechnospace.tech.basketondemand.pojoclass.ShopByCategoryModel;
 
 public class ShopByCategoryAdapter extends RecyclerView.Adapter<ShopByCategoryAdapter.MyViewHolder> {
@@ -43,7 +45,15 @@ public class ShopByCategoryAdapter extends RecyclerView.Adapter<ShopByCategoryAd
             @Override
             public void onClick(View view) {
 
-               if(shopByCategoryModelsArrayList.get(mViewHolder.getPosition()).getContainsSubCat() == 1)
+                ClickedCategoryDetails clickedCategoryDetails = new ClickedCategoryDetails(shopByCategoryModelsArrayList.get(mViewHolder.getPosition()).getCategoryId());
+
+                int subCatId = 0;
+                int catId = shopByCategoryModelsArrayList.get(mViewHolder.getPosition()).getCategoryId();
+
+                ClickedCategoryForProducts clickedCategoryForProducts = new ClickedCategoryForProducts(subCatId,catId);
+
+
+                if(shopByCategoryModelsArrayList.get(mViewHolder.getPosition()).getContainsSubCat() == 1)
                {
                    Intent intent = new Intent(mViewHolder.context, SubCategoryList.class);
                    mViewHolder.context.startActivity(intent);
