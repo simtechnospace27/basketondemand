@@ -19,29 +19,32 @@
     <ImageView
         android:id="@+id/bannerCateogryImage"
         android:scaleType="fitXY"
-        android:src="@drawable/fruit"
         android:layout_width="fill_parent"
         android:layout_height="200dp"
+        android:layout_marginTop="3dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true" />
 
     <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         app:cardCornerRadius="8dp">
 
     <TextView
         android:id="@+id/categoryName"
-        android:text="Fruits And Vegetables"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#000000"
         android:gravity="center"
         android:fadingEdgeLength="16px"
-        android:textSize="16dp"/>
+        android:textSize="16dp"
+        android:textStyle="bold"/>
     </android.support.v7.widget.CardView>
 
 

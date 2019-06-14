@@ -62,16 +62,30 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
              Picasso.with(holder.context).load(mProductArrayList.get(position).getmImgUrl()).into(holder.mImg);
              holder.mdiscountPercentage.setText(mProductArrayList.get(position).getmDiscountPrice() + "% off");
              holder.mProductName.setText(mProductArrayList.get(position).getmProductName());
-             holder.mProductOrgMrp.setText("Rs. :  "+mProductArrayList.get(position).getmOriginalMrp()+" /-");
+             holder.mProductOrgMrp.setText("MRP: Rs. :  "+mProductArrayList.get(position).getmOriginalMrp()+" /-");
 
              double originalPrice = mProductArrayList.get(position).getmOriginalMrp();
              int discount = mProductArrayList.get(position).getmDiscountPrice();
-             double discountePrice = (originalPrice * discount) / 100;
 
-             holder.mDiscountedPrice.setText("Rs. : "+discountePrice + " /-");
-             holder.mProductContent.setText(mProductArrayList.get(position).getmProductContent());
+        double discountePrice = (originalPrice * (100 - discount)) / 100;
 
-        holder.mProductOrgMrp.setPaintFlags(holder.mProductOrgMrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.mDiscountedPrice.setText("New MRP : Rs. "+discountePrice + " /-");
+        holder.mProductContent.setText(mProductArrayList.get(position).getmProductContent());
+
+
+
+        if (discount == 0)
+             {
+                 holder.mdiscountPercentage.setVisibility(View.GONE);
+                 holder.mDiscountedPrice.setVisibility(View.GONE);
+                 holder.mDiscountedPercentCardView.setVisibility(View.GONE);
+
+             }
+             else{
+            holder.mProductOrgMrp.setPaintFlags(holder.mProductOrgMrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+        }
+
 
 
 
@@ -88,6 +102,7 @@ class MyViewHolder extends RecyclerView.ViewHolder {
 
         Context context;
         CardView mCardView;
+        CardView mDiscountedPercentCardView;
         ImageView mImg;
         TextView mProductName,mProductContent,mProductOrgMrp,mDiscountedPrice,mdiscountPercentage;
 
@@ -104,6 +119,7 @@ class MyViewHolder extends RecyclerView.ViewHolder {
             mProductName = view.findViewById(R.id.product_name);
             mProductOrgMrp = view.findViewById(R.id.original_mrp);
             mDiscountedPrice = view.findViewById(R.id.discounted_price);
+            mDiscountedPercentCardView = view.findViewById(R.id.discountedPercentCardView);
         }
     }
 }

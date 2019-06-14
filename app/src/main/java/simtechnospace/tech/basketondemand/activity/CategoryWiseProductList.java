@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,7 +38,6 @@ public class CategoryWiseProductList extends AppCompatActivity {
     TextView mCategoryName;
     RecyclerView mCategoryListRecyclerView;
 
-    HashMap<String, String> url_maps;
 
     public ProductListAdapter mProductAdapter;
     public ArrayList<ProductListModel> mProductModelArrayList;
@@ -68,9 +68,7 @@ public class CategoryWiseProductList extends AppCompatActivity {
 
         mCategoryListRecyclerView.setAdapter(mProductAdapter);
 
-        String productList_Url = URLClass.productListUrl+catId+"1&subcatid="+subCatId;
-
-
+        String productList_Url = URLClass.productListUrl+catId+"&subcatid="+subCatId;
 
 
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -84,6 +82,16 @@ public class CategoryWiseProductList extends AppCompatActivity {
 
                     if (msg.equalsIgnoreCase("success"))
                     {
+
+                        System.out.println(response.toString());
+                        String displayName = response.getString("displayName");
+
+                        mCategoryName.setText(displayName);
+
+
+                        String imageDisplayUrl = response.getString("imageURL");
+                        Picasso.with(CategoryWiseProductList.this).load(imageDisplayUrl).into(mCategoryBannerImage);
+
 
                         JSONArray jsonArrayList = response.getJSONArray("result");
 
