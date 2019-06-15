@@ -20,6 +20,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
+import simtechnospace.tech.basketondemand.Dialogs.CustomAlertDialogForProductAddToCart;
 import simtechnospace.tech.basketondemand.R;
 import simtechnospace.tech.basketondemand.activity.CategoryWiseProductList;
 import simtechnospace.tech.basketondemand.activity.SubCategoryList;
@@ -42,13 +43,20 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     }
 
     @Override
-    public ProductListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ProductListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
 
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_subcategory_recyclerview, parent, false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_subcategory_recyclerview, parent, false);
         final MyViewHolder mViewHolder = new MyViewHolder(view);
 
 
+        mViewHolder.mCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomAlertDialogForProductAddToCart customAlertDialogForProductAddToCart = new CustomAlertDialogForProductAddToCart(mViewHolder.context,mProductArrayList.get(mViewHolder.getPosition()).getmProductId(),mProductArrayList.get(mViewHolder.getPosition()).getmProductName(),mProductArrayList.get(mViewHolder.getPosition()).getmImgUrl(),mProductArrayList.get(mViewHolder.getPosition()).getmOriginalMrp(),mProductArrayList.get(mViewHolder.getPosition()).getmDiscountPrice());
+                customAlertDialogForProductAddToCart.show();
+            }
+        });
 
         // inflate your custom row layout here
         return mViewHolder;
@@ -105,7 +113,7 @@ class MyViewHolder extends RecyclerView.ViewHolder {
         CardView mDiscountedPercentCardView;
         ImageView mImg;
         TextView mProductName,mProductContent,mProductOrgMrp,mDiscountedPrice,mdiscountPercentage;
-
+        Double mDoubleOrgMrp,mDoubleDiscountPrice;
 
         MyViewHolder(View view) {
             super(view);
@@ -120,6 +128,12 @@ class MyViewHolder extends RecyclerView.ViewHolder {
             mProductOrgMrp = view.findViewById(R.id.original_mrp);
             mDiscountedPrice = view.findViewById(R.id.discounted_price);
             mDiscountedPercentCardView = view.findViewById(R.id.discountedPercentCardView);
+
+            //mDoubleDiscountPrice = Double.parseDouble(mDiscountedPrice.getText().toString());
+           // mDoubleOrgMrp = Double.parseDouble(mProductOrgMrp.getText().toString());
+
+
+
         }
     }
 }

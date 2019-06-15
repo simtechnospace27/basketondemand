@@ -1,17 +1,27 @@
 package simtechnospace.tech.basketondemand.pojoclass;
 
 public class ProductListModel {
-    String mImgUrl,mProductContent,mProductName;
+    String mImgUrl,mProductContent,mProductName,mProductId;
     int mDiscountPrice;
     double mOriginalMrp;
 
 
-    public ProductListModel(String mImgUrl,String ProductName ,String mProductContent, int mDiscountPrice, double mOriginalMrp) {
+
+    public ProductListModel(String mProductId, String mImgUrl,String ProductName ,String mProductContent, int mDiscountPrice, double mOriginalMrp) {
         this.mImgUrl = mImgUrl;
         this.mProductName = ProductName;
         this.mProductContent = mProductContent;
         this.mDiscountPrice = mDiscountPrice;
         this.mOriginalMrp = mOriginalMrp;
+        this.mProductId = mProductId;
+    }
+
+    public String getmProductId() {
+        return mProductId;
+    }
+
+    public void setmProductId(String mProductId) {
+        this.mProductId = mProductId;
     }
 
     public String getmProductName() {

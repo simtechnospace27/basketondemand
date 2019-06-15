@@ -112,7 +112,7 @@ public class CategoryWiseProductList extends AppCompatActivity {
 
                            double dmrp = Double.parseDouble(mrp);
 
-                            ProductListModel productListModel = new ProductListModel(imgUrl,name,quantity,disacount,dmrp);
+                            ProductListModel productListModel = new ProductListModel(String.valueOf(id), imgUrl,name,quantity,disacount,dmrp);
 
                             mProductModelArrayList.add(productListModel);
                             mProductAdapter.notifyDataSetChanged();

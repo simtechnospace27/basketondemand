@@ -26,9 +26,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import simtechnospace.tech.basketondemand.Database.DBHelper;
 import simtechnospace.tech.basketondemand.R;
 import simtechnospace.tech.basketondemand.adapter.ShopByCategoryAdapter;
+import simtechnospace.tech.basketondemand.pojoclass.Cart;
 import simtechnospace.tech.basketondemand.pojoclass.ShopByCategoryModel;
 import simtechnospace.tech.basketondemand.pojoclass.URLClass;
 import simtechnospace.tech.basketondemand.pojoclass.Utility;
@@ -65,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
 
         mCategoryListRecycelrView.setLayoutManager(mLayoutManager);
         mCategoryListRecycelrView.setHasFixedSize(true);
+
 
 
         //we can now set adapter to recyclerView;
