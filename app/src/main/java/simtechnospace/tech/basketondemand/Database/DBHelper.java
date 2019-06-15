@@ -27,7 +27,7 @@ public class DBHelper extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // create notes table
+        // create carts table
         //System.out.println(Cart.CREATE_TABLE);
         db.execSQL(Cart.CREATE_TABLE);
     }

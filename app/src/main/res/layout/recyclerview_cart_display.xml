@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:cardview="http://schemas.android.com/tools"
+    android:layout_margin="5dp">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="8dp"
+        cardview:cardElevation="5dp"
+        android:background="#DCDCDC"
+        android:id="@+id/cardview_of_cart">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginBottom="4dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="140dp">
+
+
+                <ImageView
+                    android:id="@+id/imgcart_display"
+                    android:layout_width="fill_parent"
+                    android:layout_height="140dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:scaleType="fitXY" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+            <TextView
+                android:id="@+id/txtCartProductName"
+                android:layout_width="100dp"
+                android:layout_marginRight="5dp"
+                android:padding="5dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textSize="13dp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:background="#27b227"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="10dp"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                android:id="@+id/ttcart_original_amt"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textSize="11dp"
+                android:id="@+id/ttcart_MRP"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textSize="11dp"
+                android:id="@+id/cart_Amount"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:background="@drawable/table_broder"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                <Button
+                    android:textColor="#ffdc3dd1"
+                    android:id="@+id/btnPlus_Cart"
+                    android:background="@drawable/table_broder"
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:text="+"
+                    android:layout_weight="0.1" />
+
+                <EditText
+                    android:textSize="15.0dip"
+                    android:textColor="#ff413d3d"
+                    android:gravity="center"
+                    android:id="@+id/edtCount_Cart"
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:layout_weight="0.1"
+                    android:inputType="number" />
+
+                <Button
+                    android:textColor="#ffdc3dd1"
+                    android:id="@+id/btnminus_Cart"
+                    android:background="@drawable/table_broder"
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:layout_weight="0.1" />
+
+            </LinearLayout>
+
+                <TextView
+                android:id="@+id/txt_deletecart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:drawableTop="@drawable/ic_delete"
+                android:drawablePadding="@dimen/five_dp"
+                android:gravity="center"
+                android:clickable="true"
+                android:padding="@dimen/ten_dp"
+                android:textColor="@color/changeTextColor"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

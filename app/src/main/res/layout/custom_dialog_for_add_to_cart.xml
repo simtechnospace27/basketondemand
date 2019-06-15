@@ -7,16 +7,6 @@
     android:background="#ffefebe9"
     android:padding="1.0dip">
 
-    <!--<ImageView-->
-        <!--android:id="@+id/ProductImage"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="140.0dp"-->
-        <!--android:scaleType="fitXY"-->
-        <!--android:adjustViewBounds="true"-->
-        <!--android:src="@drawable/fruit"/>-->
-
-
-
     <android.support.v7.widget.CardView
             android:background="#ffefebe9"
             android:layout_width="fill_parent"
