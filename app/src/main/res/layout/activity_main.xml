@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scrollview"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:scrollbars="vertical">
+    tools:context=".activity.MainActivity"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:scrollbars="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -18,84 +39,92 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="5dp">
-
-                <com.daimajia.slider.library.SliderLayout
-                    android:id="@+id/slider"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp" />
-
-                <com.daimajia.slider.library.Indicators.PagerIndicator
-                    android:id="@+id/custom_indicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/g1"
-                    android:scaleType="fitXY"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"/>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/g2"
-                    android:scaleType="fitXY"
-                    android:layout_margin="2dp"
-                    android:layout_weight="2"
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:background="#CB7B19"
-                android:orientation="vertical"
-                android:layout_marginBottom="10dp">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="SHOP BY CATEGORY"
-                    android:textColor="#ffffff"
-                    android:gravity="center_vertical"
-                    android:textSize="18dp"
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginBottom="6dp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/category_list_recycler_view"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:isScrollContainer="true"
-                    android:nestedScrollingEnabled="false"
                     android:orientation="vertical"
-                    android:scrollbars="none" />
+                    android:layout_marginTop="5dp">
+
+                    <com.daimajia.slider.library.SliderLayout
+                        android:id="@+id/slider"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp" />
+
+                    <com.daimajia.slider.library.Indicators.PagerIndicator
+                        android:id="@+id/custom_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/g1"
+                        android:scaleType="fitXY"
+                        android:layout_margin="3dp"
+                        android:layout_weight="1"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/g2"
+                        android:scaleType="fitXY"
+                        android:layout_margin="2dp"
+                        android:layout_weight="2"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:background="#CB7B19"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="SHOP BY CATEGORY"
+                        android:textColor="#ffffff"
+                        android:gravity="center_vertical"
+                        android:textSize="18dp"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="6dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/category_list_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:isScrollContainer="true"
+                        android:nestedScrollingEnabled="false"
+                        android:orientation="vertical"
+                        android:scrollbars="none" />
+
+
+                </LinearLayout>
 
 
             </LinearLayout>
 
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
-    </LinearLayout>
 
-    </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
 
+</LinearLayout>

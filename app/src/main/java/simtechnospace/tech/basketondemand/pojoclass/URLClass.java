@@ -10,4 +10,6 @@ public class URLClass {
 
     public static String productListUrl = "http://goviddo.tech/BOD/productlist.php?catid=";
 
+    public static  String productDetailsURL = "http://goviddo.tech/BOD/single_product_details.php?proid=";
+
 }

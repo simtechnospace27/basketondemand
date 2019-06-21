@@ -1,10 +1,19 @@
 package simtechnospace.tech.basketondemand.activity;
 
+import android.content.Intent;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -49,10 +58,19 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
     GridLayoutManager mLayoutManager;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+
+
+
 
         mImageSliderLayout = findViewById(R.id.slider);
 
@@ -236,4 +254,70 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
     public void onPageScrollStateChanged(int state) {
 
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.my_menu, menu);
+        MenuItem item = menu.findItem(R.id.cart);
+        MenuItemCompat.setActionView(item, R.layout.actionbar_badge_layout);
+        FrameLayout notifCount = (FrameLayout)   MenuItemCompat.getActionView(item);
+
+
+        DBHelper dbUtils = new DBHelper(MainActivity.this);
+
+        long quant = dbUtils.getCartsProductCount();
+
+
+        TextView tv = (TextView) notifCount.findViewById(R.id.cart_badge);
+        tv.setText(quant+"");
+        //tv.setText("12");
+
+
+        final MenuItem itemNotification = menu.findItem(R.id.cart);
+        View actionViewNotification = MenuItemCompat.getActionView(itemNotification);
+        actionViewNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(itemNotification);
+            }
+        });
+
+        return true;
+    }
+
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+
+        if (id == R.id.cart) {
+
+            Toast.makeText(this, "Cart Details", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(MainActivity.this, CartProductList.class);
+            startActivity(intent);
+
+            return true;
+        }
+        else if(id == R.id.user)
+        {
+            Toast.makeText(this, "Profile Details", Toast.LENGTH_SHORT).show();
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
 }
