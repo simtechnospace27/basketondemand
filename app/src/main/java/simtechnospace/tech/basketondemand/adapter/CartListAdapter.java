@@ -20,19 +20,20 @@ import java.util.ArrayList;
 
 import simtechnospace.tech.basketondemand.Dialogs.CustomAlertDialogForProductAddToCart;
 import simtechnospace.tech.basketondemand.R;
+import simtechnospace.tech.basketondemand.pojoclass.CardDetailsModel;
 import simtechnospace.tech.basketondemand.pojoclass.ProductListModel;
 
 public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.MyViewHolder> {
 
-    private ArrayList<ProductListModel> mProductArrayList; // this data structure carries our title and description
+    private ArrayList<CardDetailsModel> mProductArrayList; // this data structure carries our title and description
 
     int mPosition;
 
 
-    public CartListAdapter(ArrayList<ProductListModel> productArrayList) {
-        System.out.println(productArrayList.size());
+    public CartListAdapter(ArrayList<CardDetailsModel> productArrayList) {
+        //System.out.println(productArrayList.size());
         this.mProductArrayList = productArrayList;
-        System.out.println(mProductArrayList.size());
+        //System.out.println(mProductArrayList.size());
     }
 
     @Override
@@ -53,10 +54,12 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.MyView
 
         mPosition = position;
 
+
         Picasso.with(holder.context).load(mProductArrayList.get(position).getmImgUrl()).into(holder.mImg);
 //        holder.mdiscountPercentage.setText(mProductArrayList.get(position).getmDiscountPrice() + "% off");
         holder.mProductName.setText(mProductArrayList.get(position).getmProductName());
         holder.mProductOrgMrp.setText("MRP: Rs. :  "+mProductArrayList.get(position).getmOriginalMrp()+" /-");
+        holder.mEdtCountCart.setText(mProductArrayList.get(position).getmProductQuantityt()+"");
 
         double originalPrice = mProductArrayList.get(position).getmOriginalMrp();
         int discount = mProductArrayList.get(position).getmDiscountPrice();

@@ -26,6 +26,7 @@ import java.util.List;
 import simtechnospace.tech.basketondemand.Database.DBHelper;
 import simtechnospace.tech.basketondemand.R;
 import simtechnospace.tech.basketondemand.adapter.CartListAdapter;
+import simtechnospace.tech.basketondemand.pojoclass.CardDetailsModel;
 import simtechnospace.tech.basketondemand.pojoclass.Cart;
 import simtechnospace.tech.basketondemand.pojoclass.ProductListModel;
 import simtechnospace.tech.basketondemand.pojoclass.URLClass;
@@ -36,11 +37,13 @@ public class CartProductList extends AppCompatActivity {
     List<Cart> mCartProductList;
     CartListAdapter mCartListAdapter;
 
-    ArrayList<ProductListModel> mProductListModelArrayList;
+    ArrayList<CardDetailsModel> mProductListModelArrayList;
 
     DBHelper mDbHelper;
 
     LinearLayoutManager gridLayoutManager;
+
+    String productQuantity;
 
 
     @Override
@@ -74,7 +77,8 @@ public class CartProductList extends AppCompatActivity {
 
             String productIdFromCart = cart.getProduct_id();
             int productId = Integer.parseInt(productIdFromCart);
-            String productDetailsURL = URLClass.productDetailsURL+productId;
+            productQuantity = cart.getProduct_quantity();
+            String productDetailsURL = URLClass.productDetailsURL+productId+"&proQuant="+productQuantity;
 
             final RequestQueue requestQueue = Volley.newRequestQueue(this);
 
@@ -87,8 +91,6 @@ public class CartProductList extends AppCompatActivity {
 
                         if (msg.equalsIgnoreCase("success"))
                         {
-
-                            System.out.println(response.toString());
 
 
                             JSONArray jsonArrayList = response.getJSONArray("result");
@@ -104,15 +106,17 @@ public class CartProductList extends AppCompatActivity {
                                 String mrp = js.getString("mrp");
                                 int disacount = js.getInt("disacount");
 
-                                System.out.println(imgUrl);
 
                                 //   int dmrp = Integer.parseInt(mrp);
 
+
                                 double dmrp = Double.parseDouble(mrp);
 
-                                ProductListModel productListModel = new ProductListModel(String.valueOf(id), imgUrl,name,quantity,disacount,dmrp);
+                                double quantityD = Double.parseDouble(quantity);
 
-                                mProductListModelArrayList.add(productListModel);
+                                CardDetailsModel cardDetailsModel = new CardDetailsModel(String.valueOf(id), imgUrl,name,quantity,disacount,dmrp,quantityD);
+
+                                mProductListModelArrayList.add(cardDetailsModel);
                                 mCartListAdapter.notifyDataSetChanged();
 
                             }
