@@ -5,6 +5,8 @@ public class ProductListModel {
     int mDiscountPrice;
     double mOriginalMrp;
 
+    String mSubcatName, mCatName;
+
 
 
     public ProductListModel(String mProductId, String mImgUrl,String ProductName ,String mProductContent, int mDiscountPrice, double mOriginalMrp) {
@@ -14,6 +16,33 @@ public class ProductListModel {
         this.mDiscountPrice = mDiscountPrice;
         this.mOriginalMrp = mOriginalMrp;
         this.mProductId = mProductId;
+    }
+
+    public ProductListModel(String mProductId, String mImgUrl, String mProductName, String mProductContent,   int mDiscountPrice, double mOriginalMrp, String mSubcatName, String mCatName) {
+        this.mImgUrl = mImgUrl;
+        this.mProductContent = mProductContent;
+        this.mProductName = mProductName;
+        this.mProductId = mProductId;
+        this.mDiscountPrice = mDiscountPrice;
+        this.mOriginalMrp = mOriginalMrp;
+        this.mSubcatName = mSubcatName;
+        this.mCatName = mCatName;
+    }
+
+    public String getmSubcatName() {
+        return mSubcatName;
+    }
+
+    public void setmSubcatName(String mSubcatName) {
+        this.mSubcatName = mSubcatName;
+    }
+
+    public String getmCatName() {
+        return mCatName;
+    }
+
+    public void setmCatName(String mCatName) {
+        this.mCatName = mCatName;
     }
 
     public String getmProductId() {

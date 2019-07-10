@@ -1,7 +1,12 @@
 package simtechnospace.tech.basketondemand.activity;
 
 import android.content.Intent;
+import android.opengl.Visibility;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,7 +17,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,15 +41,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import simtechnospace.tech.basketondemand.BuildConfig;
 import simtechnospace.tech.basketondemand.Database.DBHelper;
+import simtechnospace.tech.basketondemand.Dialogs.CustomAlertDialogForContact;
 import simtechnospace.tech.basketondemand.R;
 import simtechnospace.tech.basketondemand.adapter.ShopByCategoryAdapter;
-import simtechnospace.tech.basketondemand.pojoclass.Cart;
+import simtechnospace.tech.basketondemand.pojoclass.LoginUserDetails;
 import simtechnospace.tech.basketondemand.pojoclass.ShopByCategoryModel;
 import simtechnospace.tech.basketondemand.pojoclass.URLClass;
 import simtechnospace.tech.basketondemand.pojoclass.Utility;
 
-public class MainActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
+public class MainActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener, NavigationView.OnNavigationItemSelectedListener{
 
     SliderLayout mImageSliderLayout;
 
@@ -67,6 +73,16 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        //start of navigation drawer use implements NavigationView.OnNavigationItemSelectedListener
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+        //end of navigation drawer
 
 
 
@@ -167,13 +183,6 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
 
 
 
-
-
-
-
-
-
-
         final String categoryImageUrl = URLClass.categoryImageUrl;
 
 
@@ -226,12 +235,7 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
 
 
 
-
-
-
     }
-
-
 
 
 
@@ -253,6 +257,15 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Intent refresh = new Intent(this, MainActivity.class);
+        startActivity(refresh);
+        this.finish();
     }
 
 
@@ -308,16 +321,96 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
 
             return true;
         }
-        else if(id == R.id.user)
+        else if(id == R.id.search)
         {
-            Toast.makeText(this, "Profile Details", Toast.LENGTH_SHORT).show();
+
+            Intent searchIntent = new Intent(MainActivity.this, SearchActivity.class);
+            startActivity(searchIntent);
 
             return true;
+
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+
+
+
+
+
+    //for navigation drawer use this code upto end
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_profile) {
+
+            LoginUserDetails loginUserDetails = new LoginUserDetails(MainActivity.this);
+            if (loginUserDetails.getEmail() != "") {
+                Intent intentProfile = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intentProfile);
+            }
+            else{
+                Intent intentProfile = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intentProfile);
+            }
+        } else if (id == R.id.nav_offers) {
+
+        } else if (id == R.id.orderStatus) {
+
+        } else if (id == R.id.nav_faq) {
+
+        }
+
+        else if(id == R.id.user)
+        {
+            LoginUserDetails loginUserDetails = new LoginUserDetails(MainActivity.this);
+            if (loginUserDetails.getEmail() != "")
+            {
+                loginUserDetails.removeUserInfo();
+                item.setVisible(false);
+            }
+            else
+            {
+                item.setVisible(false);
+            }
+
+        }
+        else if (id == R.id.nav_share) {
+
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Basket On Demand");
+            String shareMessage= "\nBasket On Demand best store who provides good quality products at your door step, I am strongly recommending to try this app\n\n";
+            shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID +"\n";
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+            startActivity(Intent.createChooser(shareIntent, "choose one"));
+
+        } else if (id == R.id.nav_send) {
+
+            CustomAlertDialogForContact customAlertDialogForContact = new CustomAlertDialogForContact(MainActivity.this);
+            customAlertDialogForContact.show();
+
+        }
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 
 
 }

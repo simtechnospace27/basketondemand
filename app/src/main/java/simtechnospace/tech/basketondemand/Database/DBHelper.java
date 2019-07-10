@@ -47,16 +47,44 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
 
-        ContentValues values = new ContentValues();
-        // `id` and `timestamp` will be inserted automatically.
-        // no need to add them
-        values.put(Cart.COLUMN_PRODUCT_ID, mProductIdInCard);
-        values.put(Cart.COLUMN_PRODUCT_QUANTITY, mQuantityOfProduct);
-        values.put(Cart.COLUMN_PRODUCT_SKU, mProductSKU);
+        Cursor cursor = db.query(Cart.TABLE_NAME,
+                new String[]{Cart.COLUMN_ID, Cart.COLUMN_PRODUCT_ID, Cart.COLUMN_TIMESTAMP, Cart.COLUMN_PRODUCT_QUANTITY, Cart.COLUMN_PRODUCT_SKU},
+                Cart.COLUMN_PRODUCT_ID + "=?",
+                new String[]{mProductIdInCard}, null, null, null, null);
 
-        // insert row
-        long id = db.insert(Cart.TABLE_NAME, null, values);
+        long id;
 
+        System.out.println(cursor.getCount());
+
+        if (cursor.getCount() > 0)
+        {
+            cursor.moveToFirst();
+            id = cursor.getInt(cursor.getColumnIndex(Cart.COLUMN_ID));
+            double quantityOfProduct = Double.parseDouble(cursor.getString(cursor.getColumnIndex(Cart.COLUMN_PRODUCT_QUANTITY))) + Double.parseDouble(mQuantityOfProduct);
+            ContentValues values = new ContentValues();
+            values.put(Cart.COLUMN_PRODUCT_QUANTITY, quantityOfProduct);
+
+            // updating row
+            db.update(Cart.TABLE_NAME, values, Cart.COLUMN_ID + " = ?",
+                    new String[]{String.valueOf(id)});
+
+            cursor.close();
+
+        }
+        else {
+
+            cursor.close();
+
+            ContentValues values = new ContentValues();
+            // `id` and `timestamp` will be inserted automatically.
+            // no need to add them
+            values.put(Cart.COLUMN_PRODUCT_ID, mProductIdInCard);
+            values.put(Cart.COLUMN_PRODUCT_QUANTITY, mQuantityOfProduct);
+            values.put(Cart.COLUMN_PRODUCT_SKU, mProductSKU);
+
+            // insert row
+            id = db.insert(Cart.TABLE_NAME, null, values);
+        }
         // close db connection
         db.close();
 
@@ -135,21 +163,21 @@ public class DBHelper extends SQLiteOpenHelper {
         return count;
     }
 
-    public int updateProductFromCart(Cart cart) {
+    public int updateProductFromCart(String productQuantity, String productId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(Cart.COLUMN_PRODUCT_QUANTITY, cart.getProduct_quantity());
+        values.put(Cart.COLUMN_PRODUCT_QUANTITY, productQuantity);
 
         // updating row
-        return db.update(Cart.TABLE_NAME, values, Cart.COLUMN_ID + " = ?",
-                new String[]{String.valueOf(cart.getId())});
+        return db.update(Cart.TABLE_NAME, values, Cart.COLUMN_PRODUCT_ID + " = ?",
+                new String[]{productId});
     }
 
-    public void deleteProductFromCart(Cart cart) {
+    public void deleteProductFromCart(String productId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(Cart.TABLE_NAME, Cart.COLUMN_ID + " = ?",
-                new String[]{String.valueOf(cart.getId())});
+        db.delete(Cart.TABLE_NAME, Cart.COLUMN_PRODUCT_ID + " = ?",
+                new String[]{productId});
         db.close();
     }
 

@@ -3,6 +3,7 @@ package simtechnospace.tech.basketondemand.Dialogs;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
@@ -17,6 +18,8 @@ import com.squareup.picasso.Picasso;
 
 import simtechnospace.tech.basketondemand.Database.DBHelper;
 import simtechnospace.tech.basketondemand.R;
+import simtechnospace.tech.basketondemand.activity.CategoryWiseProductList;
+import simtechnospace.tech.basketondemand.activity.SubCategoryList;
 import simtechnospace.tech.basketondemand.pojoclass.Cart;
 
 public class CustomAlertDialogForProductAddToCart extends Dialog{
@@ -61,12 +64,13 @@ public class CustomAlertDialogForProductAddToCart extends Dialog{
         mTextViewProductActualMRP = findViewById(R.id.textActualMRP);
      //   mImageView = findViewById(R.id.ProductImage);
 
+        double productNewRate = (mProductRateOriginal * (100 - mDiscountRate)) / 100;
 
         mTextViewProductName.setText(mStrProductName);
         mTextViewProductActualMRP.setText(mProductRateOriginal.toString());
-        mTextViewPrductMRP.setText(mProductRateOriginal.toString());
+        mTextViewPrductMRP.setText(productNewRate+"");
        // Picasso.with(c).load(mImgUrl).into(mImageView);
-        mTextViewProductRate.setText(mProductRateOriginal.toString());
+        mTextViewProductRate.setText(productNewRate+"");
 
 
 
@@ -121,6 +125,9 @@ public class CustomAlertDialogForProductAddToCart extends Dialog{
                 dbHelper.insertProductIntoCart(mProductId,mEditTextCount.getText().toString(),mProductSKU);
 
                 Toast.makeText(c, "Product Added To Cart Successfully", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(c, CategoryWiseProductList.class);
+                c.startActivity(i);
+                ((Activity) c).finish();
                 dismiss();
             }
         });

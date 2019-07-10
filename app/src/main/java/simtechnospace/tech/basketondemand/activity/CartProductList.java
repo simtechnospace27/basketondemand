@@ -1,12 +1,16 @@
 package simtechnospace.tech.basketondemand.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,6 +32,8 @@ import simtechnospace.tech.basketondemand.R;
 import simtechnospace.tech.basketondemand.adapter.CartListAdapter;
 import simtechnospace.tech.basketondemand.pojoclass.CardDetailsModel;
 import simtechnospace.tech.basketondemand.pojoclass.Cart;
+import simtechnospace.tech.basketondemand.pojoclass.LoginUserDetails;
+import simtechnospace.tech.basketondemand.pojoclass.PriceDisplay;
 import simtechnospace.tech.basketondemand.pojoclass.ProductListModel;
 import simtechnospace.tech.basketondemand.pojoclass.URLClass;
 
@@ -45,11 +51,18 @@ public class CartProductList extends AppCompatActivity {
 
     String productQuantity;
 
+    public static Button mBtnSubmitDetails;
+
+    public static double mTotalPricePay;
+
+    LoginUserDetails mLoginUserDetails;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart_display);
+
+        mTotalPricePay = 0.0;
 
         mRecyclerViewCartList = findViewById(R.id.cart_display_recyclerview);
 
@@ -67,6 +80,10 @@ public class CartProductList extends AppCompatActivity {
 
         mRecyclerViewCartList.setAdapter(mCartListAdapter);
 
+        mBtnSubmitDetails = findViewById(R.id.btnSubmitCartForOrder);
+        mBtnSubmitDetails.setText("Place Order: Rs."+mTotalPricePay+" /-");
+
+        mLoginUserDetails = new LoginUserDetails(this);
 
 
         for (int i=0; i<mCartProductList.size(); i++)
@@ -106,20 +123,28 @@ public class CartProductList extends AppCompatActivity {
                                 String mrp = js.getString("mrp");
                                 int disacount = js.getInt("disacount");
 
+                                String tax = js.getString("tax");
 
                                 //   int dmrp = Integer.parseInt(mrp);
-
 
                                 double dmrp = Double.parseDouble(mrp);
 
                                 double quantityD = Double.parseDouble(quantity);
 
-                                CardDetailsModel cardDetailsModel = new CardDetailsModel(String.valueOf(id), imgUrl,name,quantity,disacount,dmrp,quantityD);
+                                double price = ((dmrp * (100 - disacount)) / 100) * quantityD *((100+Integer.parseInt(tax))) / 100;
+
+                                mTotalPricePay = mTotalPricePay + price;
+
+                                System.out.println(mTotalPricePay);
+
+                                CardDetailsModel cardDetailsModel = new CardDetailsModel(String.valueOf(id), imgUrl,name,quantity,disacount,dmrp,quantityD,tax);
 
                                 mProductListModelArrayList.add(cardDetailsModel);
                                 mCartListAdapter.notifyDataSetChanged();
 
                             }
+
+                            mBtnSubmitDetails.setText("Place Order: Rs."+mTotalPricePay+" /-");
 
                         }
 
@@ -146,6 +171,32 @@ public class CartProductList extends AppCompatActivity {
 
 
 
+        mBtnSubmitDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mTotalPricePay == 0)
+                {
+                    Toast.makeText(CartProductList.this, "Please Add Atleast One Product in Cart...", Toast.LENGTH_SHORT).show();
+                }
+                else{
+
+                    System.out.println(mLoginUserDetails.getEmail());
+                    if (mLoginUserDetails.getEmail() != "") {
+
+                        PriceDisplay priceDisplay = new PriceDisplay(String.valueOf(mTotalPricePay));
+
+                        Intent loginIntent = new Intent(CartProductList.this, PaymentConfirmationActivity.class);
+                        loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(loginIntent);
+                        finish();
+                    }
+                    else{
+                        Intent loginIntent = new Intent(CartProductList.this, LoginActivity.class);
+                        startActivity(loginIntent);
+                    }
+                }
+            }
+        });
 
 
 

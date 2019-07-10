@@ -18,9 +18,12 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import simtechnospace.tech.basketondemand.Database.DBHelper;
 import simtechnospace.tech.basketondemand.Dialogs.CustomAlertDialogForProductAddToCart;
 import simtechnospace.tech.basketondemand.R;
+import simtechnospace.tech.basketondemand.activity.CartProductList;
 import simtechnospace.tech.basketondemand.pojoclass.CardDetailsModel;
+import simtechnospace.tech.basketondemand.pojoclass.Cart;
 import simtechnospace.tech.basketondemand.pojoclass.ProductListModel;
 
 public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.MyViewHolder> {
@@ -28,12 +31,19 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.MyView
     private ArrayList<CardDetailsModel> mProductArrayList; // this data structure carries our title and description
 
     int mPosition;
+    Double mProductRateOriginal,mCountValue,mFinalRate;
+    int mDiscountRate;
+    String mStrCount,mStrProductPrice,mStrProductName,mImgUrl,mProductId,mProductSKU;
 
+    DBHelper mDBHelper;
+
+    Double mTotalCostPay = 0.0;
+
+    CartListAdapter mCartListAdapter;
 
     public CartListAdapter(ArrayList<CardDetailsModel> productArrayList) {
-        //System.out.println(productArrayList.size());
         this.mProductArrayList = productArrayList;
-        //System.out.println(mProductArrayList.size());
+        mCartListAdapter = this;
     }
 
     @Override
@@ -42,6 +52,97 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.MyView
 
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_cart_display, parent, false);
         final CartListAdapter.MyViewHolder mViewHolder = new CartListAdapter.MyViewHolder(view);
+
+        mDBHelper = new DBHelper(mViewHolder.context);
+
+
+        mViewHolder.mBtnPlusCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                mProductRateOriginal = ((mProductArrayList.get(mViewHolder.getPosition()).getmOriginalMrp() * (100 - mProductArrayList.get(mViewHolder.getPosition()).getmDiscountPrice()) ) / 100);
+                mCountValue = Double.parseDouble(mViewHolder.mEdtCountCart.getText().toString());
+
+                double mCurrentCost = mCountValue * mProductRateOriginal * (100 + Integer.parseInt(mProductArrayList.get(mViewHolder.getPosition()).getmTax())) / 100;
+                Double mBtnDispPrice = CartProductList.mTotalPricePay;
+
+                Double newPrice = mBtnDispPrice - mCurrentCost;
+
+                        mCountValue += 1.0d;
+                mStrCount = mViewHolder.mEdtCountCart.getText().toString();
+                mFinalRate = mProductRateOriginal * mCountValue * (100 + Integer.parseInt(mProductArrayList.get(mViewHolder.getPosition()).getmTax())) / 100;
+                mViewHolder.mEdtCountCart.setText(Double.toString(mCountValue));
+                mViewHolder.mCardAmount.setText(Double.toString(mFinalRate));
+                mStrProductPrice = mViewHolder.mCardAmount.getText().toString();
+
+                newPrice = newPrice + mFinalRate;
+                CartProductList.mTotalPricePay = newPrice;
+                CartProductList.mBtnSubmitDetails.setText("Place Order: Rs."+newPrice+" /-");
+
+
+                mDBHelper.updateProductFromCart(mViewHolder.mEdtCountCart.getText().toString(),mProductArrayList.get(mViewHolder.getPosition()).getmProductId());
+
+            }
+        });
+
+
+        mViewHolder.mBtnminusCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mProductRateOriginal = ((mProductArrayList.get(mViewHolder.getPosition()).getmOriginalMrp() * (100 - mProductArrayList.get(mViewHolder.getPosition()).getmDiscountPrice() )) / 100);
+                mCountValue = Double.parseDouble(mViewHolder.mEdtCountCart.getText().toString());
+
+                double mCurrentCost = mCountValue * mProductRateOriginal * (100 + Integer.parseInt(mProductArrayList.get(mViewHolder.getPosition()).getmTax())) / 100;
+                Double mBtnDispPrice = CartProductList.mTotalPricePay;
+                Double newPrice = mBtnDispPrice - mCurrentCost;
+
+
+                mCountValue -= 1.0d;
+                if (mCountValue != 0.0d) {
+                    mStrCount = mViewHolder.mEdtCountCart.getText().toString();
+                    mFinalRate = mProductRateOriginal * mCountValue * (100 + Integer.parseInt(mProductArrayList.get(mViewHolder.getPosition()).getmTax())) / 100;
+                    mViewHolder.mEdtCountCart.setText(Double.toString(mCountValue));
+                    mViewHolder.mCardAmount.setText(Double.toString(mFinalRate));
+                    mStrProductPrice = mViewHolder.mCardAmount.getText().toString();
+
+                    newPrice = newPrice + mFinalRate;
+                    CartProductList.mTotalPricePay = newPrice;
+                    CartProductList.mBtnSubmitDetails.setText("Place Order: Rs."+newPrice+" /-");
+
+
+                    mDBHelper.updateProductFromCart(mViewHolder.mEdtCountCart.getText().toString(),mProductArrayList.get(mViewHolder.getPosition()).getmProductId());
+                }
+
+
+            }
+        });
+
+
+        mViewHolder.mDeleteProductButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mProductRateOriginal = ((mProductArrayList.get(mViewHolder.getPosition()).getmOriginalMrp() * (100 - mProductArrayList.get(mViewHolder.getPosition()).getmDiscountPrice() )) / 100);
+                mCountValue = Double.parseDouble(mViewHolder.mEdtCountCart.getText().toString());
+
+                double mCurrentCost = mCountValue * mProductRateOriginal * (100 + Integer.parseInt(mProductArrayList.get(mViewHolder.getPosition()).getmTax())) / 100;
+                Double mBtnDispPrice = CartProductList.mTotalPricePay;
+                Double newPrice = mBtnDispPrice - mCurrentCost;
+
+                CartProductList.mTotalPricePay = newPrice;
+                CartProductList.mBtnSubmitDetails.setText("Place Order: Rs."+newPrice+" /-");
+
+                mDBHelper.deleteProductFromCart(mProductArrayList.get(mViewHolder.getPosition()).getmProductId());
+
+                mProductArrayList.remove(mProductArrayList.get(mViewHolder.getPosition())); //Actually change your list of items here
+                mCartListAdapter.notifyDataSetChanged();
+
+
+            }
+        });
+
 
 
         // inflate your custom row layout here
@@ -83,7 +184,8 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.MyView
         }
 
 
-
+        double totalPrice = discountePrice * mProductArrayList.get(position).getmProductQuantityt()*((100 + Integer.parseInt(mProductArrayList.get(position).getmTax()))) / 100;
+        holder.mCardAmount.setText("Rs. "+totalPrice+" /- (incl. tax)");
 
     }
 
@@ -102,7 +204,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.MyView
         ImageView mImg;
         TextView mProductName,mProductOrgMrp,mDiscountedPrice;
         Double mDoubleOrgMrp,mDoubleDiscountPrice;
-        Button mBtnPlusCart, mBtnminusCart;
+        Button mBtnPlusCart, mBtnminusCart, mDeleteProductButton;
         EditText mEdtCountCart;
 
         MyViewHolder(View view) {
@@ -121,9 +223,11 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.MyView
             mDiscountedPrice = view.findViewById(R.id.ttcart_MRP);
             mCardAmount = view.findViewById(R.id.cart_Amount);
 
-            mBtnminusCart = view.findViewById(R.id.btnminus);
-            mBtnPlusCart = view.findViewById(R.id.btnPlus);
+            mBtnminusCart = view.findViewById(R.id.btnminus_Cart);
+            mBtnPlusCart = view.findViewById(R.id.btnPlus_Cart);
             mEdtCountCart = view.findViewById(R.id.edtCount_Cart);
+
+            mDeleteProductButton = view.findViewById(R.id.txt_deletecart);
 
             //mDoubleDiscountPrice = Double.parseDouble(mDiscountedPrice.getText().toString());
             // mDoubleOrgMrp = Double.parseDouble(mProductOrgMrp.getText().toString());

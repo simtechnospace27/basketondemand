@@ -2,12 +2,12 @@ package simtechnospace.tech.basketondemand.pojoclass;
 
 public class CardDetailsModel {
 
-    String mImgUrl,mProductContent,mProductName,mProductId;
+    String mImgUrl,mProductContent,mProductName,mProductId,mTax;
     int mDiscountPrice;
     double mOriginalMrp;
     Double mProductQuantityt;
 
-    public CardDetailsModel(String mProductId, String mImgUrl,String ProductName ,String mProductContent, int mDiscountPrice, double mOriginalMrp, Double  mProductQuantityt) {
+    public CardDetailsModel(String mProductId, String mImgUrl,String ProductName ,String mProductContent, int mDiscountPrice, double mOriginalMrp, Double  mProductQuantityt, String mTax) {
         this.mImgUrl = mImgUrl;
         this.mProductName = ProductName;
         this.mProductContent = mProductContent;
@@ -15,8 +15,16 @@ public class CardDetailsModel {
         this.mOriginalMrp = mOriginalMrp;
         this.mProductId = mProductId;
         this.mProductQuantityt = mProductQuantityt;
+        this.mTax = mTax;
     }
 
+    public String getmTax() {
+        return mTax;
+    }
+
+    public void setmTax(String mTax) {
+        this.mTax = mTax;
+    }
 
     public String getmImgUrl() {
         return mImgUrl;
